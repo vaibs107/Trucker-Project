@@ -6,7 +6,7 @@ public class ServletInit extends AbstractAnnotationConfigDispatcherServletInitia
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] {WebConfig.class};
+		return new Class[] {WebConfig.class, JPAConfig.class};
 	}
 
 	@Override
@@ -17,6 +17,6 @@ public class ServletInit extends AbstractAnnotationConfigDispatcherServletInitia
 
 	@Override
 	protected String[] getServletMappings() {
-		return new String[] {"/vehicles", "/readings"};
+		return new String[] {"/*"};
 	}
 }
