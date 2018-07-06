@@ -24,9 +24,10 @@ public class VehicleController {
 		this.vservice = vservice;
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	public Vehicle create(@RequestBody Vehicle vehicle) {
-		return vservice.create(vehicle);
+	@RequestMapping(method = RequestMethod.PUT)
+	public List<Vehicle> create(@RequestBody List<Vehicle> vehicle) {
+		vehicle.forEach(v -> vservice.create(v));
+		return vehicle;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -39,8 +40,4 @@ public class VehicleController {
 		return vservice.findById(vin);
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, value = URI.VIN)
-	public Vehicle update(@PathVariable("vin") String vin, @RequestBody Vehicle vehicle) {
-		return vservice.update(vin, vehicle);
-	}
 }

@@ -12,5 +12,4 @@ public interface VehicleService {
 
 	public Vehicle findById(String vin);
 
-	public Vehicle update(String vin, Vehicle vehicle);
 }

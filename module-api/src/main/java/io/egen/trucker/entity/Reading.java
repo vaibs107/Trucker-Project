@@ -1,10 +1,15 @@
 package io.egen.trucker.entity;
 
-import java.util.HashMap;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
+@Entity
 public class Reading {
 
+	@Id
 	private String vin;
+
 	private double latitude;
 	private double longitude;
 	private String timestamp;
@@ -15,7 +20,9 @@ public class Reading {
 	private boolean engineCoolantLow;
 	private boolean cruiseControlOn;
 	private int engineRpm;
-	private HashMap<String, Integer> tires;
+
+	@OneToOne
+	private Tire tires;
 
 	public String getVin() {
 		return vin;
@@ -105,11 +112,11 @@ public class Reading {
 		this.engineRpm = engineRpm;
 	}
 
-	public HashMap<String, Integer> getTires() {
+	public Tire getTires() {
 		return tires;
 	}
 
-	public void setTires(HashMap<String, Integer> tires) {
+	public void setTires(Tire tires) {
 		this.tires = tires;
 	}
 

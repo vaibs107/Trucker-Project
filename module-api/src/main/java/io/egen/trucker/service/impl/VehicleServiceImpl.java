@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import io.egen.trucker.entity.Vehicle;
+import io.egen.trucker.exception.NotFoundException;
 import io.egen.trucker.repository.VehicleRepository;
 import io.egen.trucker.service.VehicleService;
 
@@ -20,32 +22,29 @@ public class VehicleServiceImpl implements VehicleService {
 	}
 
 	@Override
+	@Transactional
 	public Vehicle create(Vehicle vehicle) {
-		return vrepository.create(vehicle);
+		Vehicle existingVehicle = vrepository.findById(vehicle.getVin());
+		if (existingVehicle == null) {
+			return vrepository.create(vehicle);
+		}
+		return vrepository.update(vehicle);
 	}
 
 	@Override
+	@Transactional
 	public List<Vehicle> getAllVehicles() {
 		return vrepository.getAllVehicles();
 	}
 
 	@Override
+	@Transactional
 	public Vehicle findById(String vin) {
 		Vehicle existingVehicle = vrepository.findById(vin);
 		if (existingVehicle == null) {
-			return null;
-		} else {
-			return existingVehicle;
+			throw new NotFoundException("Vehicle with id: " + vin + " not found!"); // throw runtime exception 404
+																					// vehicle not found to client
 		}
-	}
-
-	@Override
-	public Vehicle update(String vin, Vehicle vehicle) {
-		Vehicle existingVehicle = findById(vin);
-		if (existingVehicle == null) {
-			return create(vehicle);
-		} else {
-			return vrepository.update(vin, existingVehicle);
-		}
+		return existingVehicle;
 	}
 }
