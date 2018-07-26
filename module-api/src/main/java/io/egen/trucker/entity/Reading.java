@@ -1,15 +1,22 @@
 package io.egen.trucker.entity;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 @Entity
+@NamedQueries({
+		@NamedQuery(name = "Reading.getAllReadingsByVin", query = "select r from Reading r where r.vin=:paramVin") })
 public class Reading {
 
 	@Id
-	private String vin;
+	private String readingId;
 
+	private String vin;
 	private double latitude;
 	private double longitude;
 	private String timestamp;
@@ -23,6 +30,18 @@ public class Reading {
 
 	@OneToOne
 	private Tire tires;
+
+	public Reading() {
+		this.readingId = UUID.randomUUID().toString();
+	}
+
+	public String getReadingId() {
+		return readingId;
+	}
+
+	public void setReadingId(String readingId) {
+		this.readingId = readingId;
+	}
 
 	public String getVin() {
 		return vin;
@@ -122,10 +141,11 @@ public class Reading {
 
 	@Override
 	public String toString() {
-		return "Reading [vin=" + vin + ", latitude=" + latitude + ", longitude=" + longitude + ", timestamp="
-				+ timestamp + ", fuelVolume=" + fuelVolume + ", speed=" + speed + ", engineHp=" + engineHp
-				+ ", checkEngineLightOn=" + checkEngineLightOn + ", engineCoolantLow=" + engineCoolantLow
-				+ ", cruiseControlOn=" + cruiseControlOn + ", engineRpm=" + engineRpm + ", tires=" + tires + "]";
+		return "Reading [readingId=" + readingId + ", vin=" + vin + ", latitude=" + latitude + ", longitude="
+				+ longitude + ", timestamp=" + timestamp + ", fuelVolume=" + fuelVolume + ", speed=" + speed
+				+ ", engineHp=" + engineHp + ", checkEngineLightOn=" + checkEngineLightOn + ", engineCoolantLow="
+				+ engineCoolantLow + ", cruiseControlOn=" + cruiseControlOn + ", engineRpm=" + engineRpm + ", tires="
+				+ tires + "]";
 	}
 
 }

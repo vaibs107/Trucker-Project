@@ -1,16 +1,18 @@
 package io.egen.trucker.entity;
 
-//import java.util.List;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-//import javax.persistence.OneToMany;
+import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({ @NamedQuery(name = "Vehicle.getAllVehicles", query = "SELECT v FROM Vehicle v ORDER BY v.vin") })
 public class Vehicle {
+
 	@Id
 	private String vin;
 
@@ -21,16 +23,16 @@ public class Vehicle {
 	private int maxFuelVolume;
 	private String lastServiceDate;
 
-	// @OneToMany
-	// private List<Reading> readings;
-	//
-	// public List<Reading> getReadings() {
-	// return readings;
-	// }
-	//
-	// public void setReadings(List<Reading> readings) {
-	// this.readings = readings;
-	// }
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Reading> readings;
+
+	public List<Reading> getReadings() {
+		return readings;
+	}
+
+	public void setReadings(List<Reading> readings) {
+		this.readings = readings;
+	}
 
 	public String getVin() {
 		return vin;
@@ -91,7 +93,7 @@ public class Vehicle {
 	@Override
 	public String toString() {
 		return "Vehicle [vin=" + vin + ", make=" + make + ", model=" + model + ", year=" + year + ", redlineRpm="
-				+ redlineRpm + ", maxFuelVolume=" + maxFuelVolume + ", lastServiceDate=" + lastServiceDate + "]";
+				+ redlineRpm + ", maxFuelVolume=" + maxFuelVolume + ", lastServiceDate=" + lastServiceDate
+				+ ", readings=" + readings + "]";
 	}
-
 }
