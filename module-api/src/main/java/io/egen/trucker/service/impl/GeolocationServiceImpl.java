@@ -59,7 +59,7 @@ public class GeolocationServiceImpl implements GeolocationService {
 		double lat = reading.getLatitude();
 		double lng = reading.getLongitude();
 
-		GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyDlAwc6POEqgebiSommBDhvOcjKmQcPpUg").build();
+		GeoApiContext context = new GeoApiContext.Builder().apiKey("yourAPIKey").build();
 
 		GeocodingResult[] result = GeocodingApi.reverseGeocode(context, new LatLng(lat, lng)).await();
 
