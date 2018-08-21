@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 @NamedQueries({
-		@NamedQuery(name = "Reading.getAllReadingsByVin", query = "select r from Reading r where r.vin=:paramVin") })
+		@NamedQuery(name = "Reading.getAllReadingsByVin", query = "SELECT r FROM Reading r WHERE r.vin=:paramVin")})
 public class Reading {
 
 	@Id

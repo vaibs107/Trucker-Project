@@ -34,5 +34,4 @@ public class ReadingRepositoryImpl implements ReadingRepository {
 			return null;
 		}
 	}
-
 }
