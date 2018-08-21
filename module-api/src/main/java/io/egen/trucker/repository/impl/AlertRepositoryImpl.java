@@ -17,10 +17,13 @@ public class AlertRepositoryImpl implements AlertRepository {
 	@PersistenceContext
 	private EntityManager em;
 
-	public List<Alert> getAllHighAlerts() {
-		TypedQuery<Alert> aquery = em.createNamedQuery("Alert.getAllHighAlerts", Alert.class);
+	@Override
+	public Alert getHighAlert(String alertTime) {
+		// System.out.println("In AlertRepositoryImpl, alertTime: " + alertTime);
+		TypedQuery<Alert> aquery = em.createNamedQuery("Alert.getHighAlert", Alert.class);
 		aquery.setParameter("paramPriority", "HIGH");
-		return aquery.getResultList();
+		aquery.setParameter("paramTimestamp", alertTime);
+		return aquery.getSingleResult();
 	}
 
 	@Override
@@ -31,11 +34,18 @@ public class AlertRepositoryImpl implements AlertRepository {
 	}
 
 	@Override
-	public void setAlerts(String vin, String rule, String priority) {
+	public void setAlerts(String vin, String rule, String priority, String alertTimestamp) {
 		Alert alert = new Alert();
 		alert.setVin(vin);
 		alert.setRule(rule);
 		alert.setPriority(priority);
+		alert.setAlertTimestamp(alertTimestamp);
 		em.persist(alert);
+	}
+
+	@Override
+	public List<String> getAlertsTimeList() {
+		TypedQuery<String> alertTimeQuery = em.createNamedQuery("Alert.getAlertsTimeList", String.class);
+		return alertTimeQuery.getResultList();
 	}
 }

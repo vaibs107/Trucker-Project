@@ -9,4 +9,5 @@ public interface ReadingService {
 	public Reading create(Reading reading);
 
 	public List<Reading> getAllReadingsByVin(String vin);
+
 }

@@ -9,8 +9,9 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
-		@NamedQuery(name = "Alert.getAllHighAlerts", query = "SELECT a FROM Alert a WHERE a.priority=:paramPriority ORDER BY a.vin"),
-		@NamedQuery(name = "Alert.getAllAlertsByVin", query = "SELECT a FROM Alert a WHERE a.vin=:paramVin") })
+		@NamedQuery(name = "Alert.getHighAlert", query = "SELECT a FROM Alert a WHERE a.priority=:paramPriority AND a.alertTimestamp=:paramTimestamp ORDER BY a.vin"),
+		@NamedQuery(name = "Alert.getAllAlertsByVin", query = "SELECT a FROM Alert a WHERE a.vin=:paramVin"),
+		@NamedQuery(name = "Alert.getAlertsTimeList", query = "SELECT a.alertTimestamp FROM Alert a") })
 public class Alert {
 
 	@Id
@@ -19,6 +20,7 @@ public class Alert {
 	private String priority;
 	private String rule;
 	private String vin;
+	private String alertTimestamp;
 
 	public Alert() {
 		this.alertId = UUID.randomUUID().toString();
@@ -56,9 +58,18 @@ public class Alert {
 		this.priority = priority;
 	}
 
+	public String getAlertTimestamp() {
+		return alertTimestamp;
+	}
+
+	public void setAlertTimestamp(String alertTimestamp) {
+		this.alertTimestamp = alertTimestamp;
+	}
+
 	@Override
 	public String toString() {
-		return "Alert [alertId=" + alertId + ", priority=" + priority + ", rule=" + rule + ", vin=" + vin + "]";
+		return "Alert [alertId=" + alertId + ", priority=" + priority + ", rule=" + rule + ", vin=" + vin
+				+ ", alertTimestamp=" + alertTimestamp + "]";
 	}
 
 }
